@@ -5,6 +5,12 @@ date: "3/30/2022"
 output: html_document
 ---
 
+repo = https://github.com/ZachJosten/practice4
+
+Zach Josten
+
+Kevin Gnaster
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -19,12 +25,43 @@ View(av)
 
 ```{r}
 deathtemp = av %>% gather(Time, Death, c("Death1", "Death2", "Death3", "Death4", "Death5"))
+
+deathtemp = deathtemp %>% filter(Name.Alias != "")
+
 returntemp = av %>% gather(Time, Return, c("Return1", "Return2", "Return3", "Return4", "Return5"))
 deathtemp$Time = deathtemp$Time %>% parse_number()
 returntemp$Time = returntemp$Time %>% parse_number()
 deathtemp1 = deathtemp %>% select(c("Name.Alias", "Time", "Death"))
 returntemp1 = returntemp %>% select(c("Name.Alias", "Time", "Return"))
 fin = left_join(deathtemp1, returntemp1, by=c("Time", "Name.Alias"))
+
+fin = fin %>% filter(Name.Alias != "Vance Astrovik")
+
+fin = fin %>% filter(!Name.Alias %in% c(""))
+
 View(fin)
 ```
+
+# Kevin
+
+"Out of 173 listed Avengers, my analysis found that 69 had died at least one time after they joined the team.5 That’s about 40 percent of all people who have ever signed on to the team."
+
+```{r}
+length(which(fin$Death == "YES")) / length(unique(fin$Name.Alias))
+```
+
+I am seeing about 50% of characters have died at least one time, so his number is close, but not exact.
+
+
+"I counted 89 total deaths — some unlucky Avengers are basically Meat Loaf with an E-ZPass — and on 57 occasions the individual made a comeback."
+
+```{r}
+length(which(fin$Return == "YES")) / length(which(fin$Death == "YES"))
+```
+
+This is very close to the author's claim of 57/89 (64%) returns after death.
+
+I got 67%, so this claim seems relativey accurate.
+
+
 
