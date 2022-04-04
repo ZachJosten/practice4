@@ -18,11 +18,13 @@ View(av)
 ```
 
 ```{r}
-temp = av %>% gather(Time, Death, c("Death1", "Death2", "Death3", "Death4", "Death5"))
-temp = temp %>% gather(Time, Return, c("Return1", "Return2", "Return3", "Return4", "Return5"))
-wantednames = c("URL", "Name.Alias", "Appearances", "Current.", "Gender", "Probationary.Introl", "Full.Reserve.Avengers.Intro", "Year", "Years.since.joining", "Honorary", "Notes", "Time", "Death", "Return")
-fin = temp %>% subset(select = wantednames)
-fin$Time = fin$Time %>% parse_number()
+deathtemp = av %>% gather(Time, Death, c("Death1", "Death2", "Death3", "Death4", "Death5"))
+returntemp = av %>% gather(Time, Return, c("Return1", "Return2", "Return3", "Return4", "Return5"))
+deathtemp$Time = deathtemp$Time %>% parse_number()
+returntemp$Time = returntemp$Time %>% parse_number()
+deathtemp1 = deathtemp %>% select(c("Name.Alias", "Time", "Death"))
+returntemp1 = returntemp %>% select(c("Name.Alias", "Time", "Return"))
+fin = left_join(deathtemp1, returntemp1, by=c("Time", "Name.Alias"))
 View(fin)
 ```
 
