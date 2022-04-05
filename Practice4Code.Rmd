@@ -1,6 +1,6 @@
 ---
 title: "Practice4Code"
-author: ""
+author: "Zach Josten, Kevin Gnaster"
 date: "3/30/2022"
 output: html_document
 ---
@@ -63,5 +63,20 @@ This is very close to the author's claim of 57/89 (64%) returns after death.
 
 I got 67%, so this claim seems relativey accurate.
 
+\
 
+# Zach
+
+"There's a 2 in 3 chance that a member of the Avengers returned from their first stint in the afterlife, but only a 50 percent chance they recovered from a second or third death."
+```{r}
+fin %>% filter(Time == 1, Return == "YES") %>% nrow() / 
+  fin %>% filter(Time == 1, Death == "YES") %>% nrow() 
+```
+I am getting around 70% which is pretty close to the projected 66% that he expects.  
+
+```{r}
+fin %>% filter(Time == 2 | Time == 3, Return == "YES") %>% nrow() /
+  fin %>% filter(Time == 2 | Time == 3, Death == "YES") %>% nrow()
+```
+For the second part of the statement I am getting around 53%, which is very close to the 50% he got, so overall this statement is largely correct.  
 
